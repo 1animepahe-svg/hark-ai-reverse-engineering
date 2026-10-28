@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hark AI — Reverse-Engineering Project</title>
+<style>
+  :root { --bg:#0d1117; --card:#161b22; --line:#30363d; --txt:#c9d1d9; --dim:#8b949e; --acc:#58a6ff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); font:16px/1.65 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  a { color:var(--acc); text-decoration:none; } a:hover { text-decoration:underline; }
+  .wrap { max-width:860px; margin:0 auto; padding:48px 24px 80px; }
+  header { border-bottom:1px solid var(--line); padding-bottom:28px; margin-bottom:32px; }
+  h1 { margin:0 0 8px; font-size:2rem; letter-spacing:-.5px; }
+  .sub { color:var(--dim); }
+  .tagline { display:inline-block; margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:4px 14px; font-size:.85rem; color:var(--acc); }
+  section { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:24px 28px; margin-bottom:20px; }
+  h2 { margin:0 0 14px; font-size:1.25rem; color:#fff; border-bottom:1px solid var(--line); padding-bottom:10px; }
+  table { width:100%; border-collapse:collapse; font-size:.95rem; }
+  th,td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); }
+  th { color:var(--dim); font-weight:600; font-size:.82rem; text-transform:uppercase; letter-spacing:.06em; }
+  code { background:#0d1117; border:1px solid var(--line); border-radius:5px; padding:2px 7px; font-size:.9em; color:#79c0ff; font-family:ui-monospace,Consolas,monospace; }
+  ul { margin:8px 0 0; padding-left:22px; } li { margin:6px 0; }
+  .note { color:var(--dim); font-size:.9rem; margin-top:10px; }
+  footer { color:var(--dim); font-size:.85rem; border-top:1px solid var(--line); margin-top:36px; padding-top:20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Hark AI — Reverse-Engineering Project</h1>
+  <div class="sub">Static characterization of <strong>Hark Pro</strong> (<a href="https://hark.com">hark.com</a> / hark.ai)</div>
+  <span class="tagline">passive public-surface analysis · no authentication · no secrets</span>
+</header>
+
+<section>
+  <h2>Highlights</h2>
+  <ul>
+    <li><strong>Stack:</strong> Next.js App Router + Turbopack; 24 chunks (~6.45&nbsp;MB); <strong>no source maps</strong> shipped — minified-only analysis</li>
+    <li><strong>Live unauthenticated endpoint:</strong> <code>GET /api/sky/iplocate</code> → <code>{city, latitude, longitude, timezone}</code> — geo-personalization fired at page load</li>
+    <li><strong>Pure relative-URL SPA:</strong> zero <code>hark.*</code> host strings inside shipped chunks; all traffic is same-origin <code>/api/*</code></li>
+    <li><strong>Thin third-party profile:</strong> Sanity CDN, Cloudflare Insights beacon, one YouTube embed — no analytics SDKs detected</li>
+    <li><strong>Security posture (self-described):</strong> tokenized credential vault, watchable/cancellable agent actions ("open kitchen"), own-models-first inference, 0-retention vendor policy</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Artifacts</h2>
+  <table>
+    <tr><th>File</th><th>What it is</th></tr>
+    <tr><td><a href="hark-ai-repo/hark-report/hark-reverse-engineering-report.md">Full findings report</a></td><td>Complete static-analysis writeup</td></tr>
+    <tr><td><a href="hark-ai-repo/docs/methodology.md">Methodology</a></td><td>How the analysis was performed, step by step</td></tr>
+    <tr><td><a href="hark-ai-repo/docs/endpoints.md">Endpoints</a></td><td>Live API surface inventory</td></tr>
+    <tr><td><a href="hark-ai-repo/docs/third-parties.md">Third parties</a></td><td>External service fingerprint table</td></tr>
+  </table>
+  <p class="note">If the repo was flattened (files at root instead of inside <code>hark-ai-repo/</code>), use <a href="hark-report/hark-reverse-engineering-report.md">root-relative links</a> instead.</p>
+</section>
+
+<section>
+  <h2>Scope &amp; ethics</h2>
+  <p>All findings derive from what the site serves to any visitor: public HTML and shipped JavaScript. No authenticated accounts were accessed, no private credentials touched, no secret material disclosed. Documented for educational and security-review purposes.</p>
+</section>
+
+<footer>
+  Built from a static mirror of hark.com (deployment <code>dpl_43vpACitAoHemg5zATXXCP8hBYHa</code>) · Hosted with GitHub Pages
+</footer>
+
+</div>
+</body>
+</html>
